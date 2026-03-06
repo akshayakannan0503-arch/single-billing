@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sri Maruthi Enterprises Invoice</title>
+
+<style>
+
+body{
+	font-family: Arial;
+	margin:40px;
+}
+
+.logo{
+	display:block;
+	margin:auto;
+	width:100px;
+}
+
+.header{
+	display:flex;
+	justify-content:space-between;
+	margin-top:10px;
+}
+
+.center-text{
+	text-align:center;
+}
+
+.company{
+	text-align:center;
+	margin-top:10px;
+}
+
+hr{
+	margin:15px 0;
+}
+
+.details{
+	display:flex;
+	justify-content:space-between;
+}
+
+table{
+	width:100%;
+	border-collapse:collapse;
+	margin-top:20px;
+}
+
+table,th,td{
+	border:1px solid black;
+	padding:8px;
+	text-align:center;
+}
+
+button{
+	padding:8px 12px;
+	margin-top:10px;
+	margin-right:10px;
+}
+
+</style>
+
+	</head>
+
+	<body>
+
+		<!-- Logo -->
+
+		<img src="logo.png" class="logo">
+
+		<!-- Left Right Header -->
+
+		<div class="header">
+
+			<div>
+				STIN:<br>
+				ESI:<br>
+				PF:
+			</div>
+
+			<div>
+				Sup.Code:<br>
+				Cell:
+			</div>
+
+		</div>
+
+		<!-- Company Details -->
+
+		<div class="company">
+
+			<h2>Sri Maruthi Enterprises</h2>
+
+			<p>(Painting, Civil, Carpentry Work)</p>
+
+			<p>No.4693 M.M.D.A 2nd Street, 1st Main Road<br>
+			Mathur, Chennai - 600068</p>
+
+		</div>
+
+		<hr>
+
+		<h3 class="center-text">TAX INVOICE</h3>
+
+		<hr>
+
+		<!-- Client + Invoice details -->
+
+		<div class="details">
+
+			<div>
+
+				<b>To</b><br>
+
+				<input type="text" value="Devendra Autocomp Pvt Ltd" id="client"><br>
+
+				GST No: <input type="text" value="33AAACD1193N1ZN"><br>
+
+				<input type="text" value="No:35-B/2 Second Main Road"><br>
+
+				<input type="text" value="Ambattur Industrial Estate"><br>
+
+				<input type="text" value="Chennai 600058 Tamil Nadu, India">
+
+			</div>
+
+			<div>
+
+				Date : <input type="date"><br><br>
+
+				Bill No : <input type="text"><br><br>
+
+				PO No : <input type="text">
+
+			</div>
+
+		</div>
+
+		<!-- Table -->
+
+		<table id="invoiceTable">
+
+			<tr>
+				<th>S.No</th>
+				<th>Description</th>
+				<th>Qty</th>
+				<th>Rate</th>
+				<th>Total</th>
+				<th>Action</th>
+			</tr>
+
+		</table>
+
+		<button onclick="addRow()">Add Row</button>
+
+		<!-- Totals -->
+
+		<h3 id="grandTotal"></h3>
+
+		<!-- Buttons -->
+
+		<button onclick="calculateTotal()">Calculate Total</button>
+
+		<button onclick="window.print()">Print</button>
+
+		<button onclick="savePDF()">Save PDF</button>
+
+		<script>
+
+			let count=1
+
+			function addRow(){
+
+				let table=document.getElementById("invoiceTable")
+
+				let row=table.insertRow()
+
+				row.innerHTML=`
+				<td>${count++}</td>
+				<td><input type="text"></td>
+				<td><input type="number"></td>
+				<td><input type="number"></td>
+				<td class="rowTotal">0</td>
+				<td><button onclick="deleteRow(this)">Delete</button></td>
+				`
+
+			}
+
+			function deleteRow(btn){
+
+				let row=btn.parentNode.parentNode
+				row.remove()
+
+			}
+
+			function calculateTotal(){
+
+				let rows=document.querySelectorAll("#invoiceTable tr")
+
+				let total=0
+
+				for(let i=1;i<rows.length;i++){
+
+					let qty=rows[i].cells[2].children[0].value
+					let rate=rows[i].cells[3].children[0].value
+
+					let rowTotal=qty*rate
+
+					rows[i].cells[4].innerHTML=rowTotal
+
+					total+=rowTotal
+
+				}
+
+				document.getElementById("grandTotal").innerHTML="Grand Total : ₹ "+total
+
+			}
+
+			function savePDF(){
+
+				window.print()
+
+			}
+
+		</script>
+
+				<br><br>
+
+				<div style="display:flex; justify-content:space-between">
+
+					<div>
+
+						Thanking You
+
+					</div>
+
+					<div>
+
+						Yours Faithfully<br>
+						<b>Sri Maruthi Enterprises</b>
+
+					</div>
+
+				</div>
+
+	</body>
+</html>
